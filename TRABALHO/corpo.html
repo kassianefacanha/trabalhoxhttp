@@ -1,0 +1,63 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <title>Consulta AJAX com GET</title>
+  </head>
+  <body>
+    <h2>O Objeto XMLHttpRequest</h2>
+
+    <button onclick="carregarJSON()">Request Data</button>
+
+    <p id="angel"></p>
+  </body>
+  <script>
+    //AQUI SÓ VAI MOSTRAR O PRIMEIRO ELEMENTO DA LISTA DO JSON
+    function carregarJSON(){
+      var xhttp = new XMLHttpRequest();//CRIA UMA NOVA REQUISIÇÃO XML HTTP
+      xhttp.onreadystatechange = function() { //LER O ESTADO MUDADO 
+        if (this.readyState == 4 && this.status >= 200 && this.status < 300) {
+          //4 É ESTADO PRONTO E DE 200 E MENOS DE 300 O STATUS TÁ OK
+          var resposta = this.responseText;//REQUISIÇÃO OU RESPOSTA TEXTO
+          var listaUsuarios = JSON.parse(resposta);//LISTA DE USUÁRIOS CONVERTIDA t.
+          document.getElementById("angel").innerHTML =//ESCREVA O QUE TEM ABAIXO NO CASO O Q TA NA POSIÇÃO 0 DA LISTA
+            "<b>Nome: </b> <br> " +
+            listaUsuarios.results[0].name.title +
+            "<br> <b>primeiro nome: </b> <br>" +
+            listaUsuarios.results[0].name.first +
+            "<br> <b> ultimo nome: </b> <br> "+
+            listaUsuarios.results[0].name.last +
+            "<br> <b>imagem: </b> <br> <img src='" +
+            listaUsuarios.results[0].picture.medium +
+            "'><br> <b>genero: </b> <br>" +
+            listaUsuarios.results[0].gender +
+            "<br> <b>idade: </b> <br>"+
+            listaUsuarios.results[0].dob.age+ 
+            "<br> <b>data: </b> <br>"+
+            listaUsuarios.results[0].dob.date+
+            "<br> <b>telefones fixo: </b> <br>"+
+            listaUsuarios.results[0].phone +
+            "<br> <b>telefones movel: </b> <br>"+
+            listaUsuarios.results[0].cell +
+            "<br> <b>endereço: </b> <br> <b>Rua: </b><br>"+
+            listaUsuarios.results[0].location.street.name +
+            "<br>"+
+            listaUsuarios.results[0].location.street.number +
+            "<br> <b>cidade: </b> <br>"+
+            listaUsuarios.results[0].location.city+
+            "<br> <b>estado: </b> <br>"+
+            listaUsuarios.results[0].location.state+
+            "<br> <b>país: </b> <br>"+
+            listaUsuarios.results[0].location.country+
+            "<br> <b>codigo postal: </b> <br>"+
+            listaUsuarios.results[0].location.postcode+
+            "<br> <b>codenadas: </b> <br><b> latitude </b> <br>"+
+            listaUsuarios.results[0].location.coordinates.latitude+
+            " <br><b> longitude: </b><br>"+
+            listaUsuarios.results[0].location.coordinates.longitude
+
+        }
+      };
+      xhttp.open("GET", "https://randomuser.me/api/");//A REQUISIÇÃO HTTP VAI SER ABERTA PELO METOTO GET E PASSO MEU JSON
+      xhttp.send(null);// N ENVIO NADA
+    }
+    </script>
